@@ -1,0 +1,18 @@
+<!-- templates/index.html -->
+<!-- 首页 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页</title>
+</head>
+<body>
+    <h1>欢迎访问我的网站</h1>
+    <p>请选择一个操作：</p>
+        <ul>
+            <li><a href="{% url 'login' %}">登录</a></li>
+            <li><a href="{% url 'register' %}">注册</a></li>
+        </ul>
+</body>
+</html>
