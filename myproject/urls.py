@@ -19,10 +19,19 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('myapp.urls')),
+    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('products/', include('product.urls')),
+    path('cart/', include('cart.urls')),
+    path('api/', include('myapp.urls')),  # 包含应用的 API 路由
 ]
 
 # 添加媒体文件的URL配置
