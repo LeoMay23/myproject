@@ -31,7 +31,8 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('products/', include('product.urls')),
     path('cart/', include('cart.urls')),
-    path('api/', include('myapp.urls')),  # 包含应用的 API 路由
+    path('api/', include('myapp.urls')),
+    path('purchase/', include('purchased.urls')),
 ]
 
 # 添加媒体文件的URL配置

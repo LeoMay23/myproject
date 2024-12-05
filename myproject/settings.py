@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'myapp',
     'product',
     'cart',
+    'purchased',
     'rest_framework',
     'corsheaders'
 ]

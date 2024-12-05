@@ -29,23 +29,3 @@ def product_detail(request , id):
             return Response(status=status.HTTP_404_NOT_FOUND)
         serializer = ProductDetailSerializer(product)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-class ProductFilter(django_filters.FilterSet):
-    name = django_filters.CharFilter(lookup_expr='icontains')
-    description = django_filters.CharFilter(lookup_expr='icontains')
-    price_min = django_filters.NumberFilter(field_name='price', lookup_expr='gte')
-    price_max = django_filters.NumberFilter(field_name='price', lookup_expr='lte')
-
-    class Meta:
-        model = Product
-        fields = ['name', 'description', 'price_min', 'price_max']
-'''
-class ProductViewSet(viewsets.ModelViewSet):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
-    filter_backends = (filters.OrderingFilter, filters.SearchFilter, django_filters.DjangoFilterBackend)
-    search_fields = ['name', 'description']
-    filterset_class = ProductFilter
-    ordering_fields = '__all__'
-    ordering = ['name']
-'''
