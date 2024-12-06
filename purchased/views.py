@@ -32,7 +32,6 @@ def get_purchased_item(request, pk):
 def checkout(request):
     # 获取前端传递的商品 ID 和数量
     cart_data = request.data.get('items', [])
-    print(cart_data)
     if not cart_data:
         return Response({'status': 0, 'message': '没有选择商品进行结算'}, status=status.HTTP_400_BAD_REQUEST)
 

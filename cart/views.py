@@ -47,16 +47,17 @@ def get_cart_items(request):
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
 def update_cart_item_quantity(request):
-    data = request.data
-    cart_item = get_object_or_404(CartItem, id=data['id'], user=request.user)
-    new_quantity = data.get('quantity')
-    if cart_item is not None:
-        if new_quantity is None:
-            return Response({'status': 0, 'message': '无效的商品数量'}, status=status.HTTP_400_BAD_REQUEST)
-        elif int(new_quantity) <= 0:
-            cart_item.delete()
-        else:
-            cart_item.quantity = new_quantity
-            cart_item.save()
+    update_data = request.data.get('items', [])
+    for data in update_data:
+        cart_item = get_object_or_404(CartItem, id=data['id'], user=request.user)
+        new_quantity = data.get('quantity')
+        if cart_item is not None:
+            if new_quantity is None:
+                return Response({'status': 0, 'message': '无效的商品数量'}, status=status.HTTP_400_BAD_REQUEST)
+            elif int(new_quantity) <= 0:
+                cart_item.delete()
+            else:
+                cart_item.quantity = int(new_quantity)
+                cart_item.save()
 
     return Response({'status': 1, 'message': '购物车商品数量更新成功'}, status=status.HTTP_200_OK)
