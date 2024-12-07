@@ -1,3 +1,6 @@
+from itertools import product
+
+from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -6,6 +9,7 @@ from rest_framework import status
 from cart.models import CartItem
 from .models import PurchasedItem
 from .serializers import PurchasedItemSerializer
+from product.models import Product
 
 # View to retrieve all purchased items for the logged-in user
 @api_view(['GET'])
@@ -29,7 +33,7 @@ def get_purchased_item(request, pk):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])  # 需要认证用户才能结算
-def checkout(request):
+def checkout_cart(request):
     # 获取前端传递的商品 ID 和数量
     cart_data = request.data.get('items', [])
     if not cart_data:
@@ -66,6 +70,28 @@ def checkout(request):
             cart_item.delete()
         else:
             cart_item.save()
+
+    # 批量创建购买记录
+    PurchasedItem.objects.bulk_create(purchased_items)
+
+    return Response({'status': 1, 'message': '结算成功'}, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])  # 需要认证用户才能结算
+def checkout_item(request):
+    # 获取前端传递的商品 ID 和数量
+    item_id = request.data.get('id')
+    product = get_object_or_404(Product, pk=item_id)
+    if not product:
+        return Response({'status': 0, 'message': '没有选择商品进行结算'}, status=status.HTTP_400_BAD_REQUEST)
+
+    # 处理选中的商品
+    purchased_items = []
+    purchased_items.append(PurchasedItem(
+        user=request.user,
+        product=product,
+        quantity= 1
+    ))
 
     # 批量创建购买记录
     PurchasedItem.objects.bulk_create(purchased_items)
