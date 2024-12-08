@@ -32,3 +32,11 @@ class ProductImage(models.Model):
 
     def __str__(self):
         return f"Image for {self.product.name}"
+
+class ProductComment(models.Model):
+    product = models.ForeignKey(Product, related_name='comments', on_delete=models.CASCADE)
+    username = models.CharField(max_length=100, blank=True, null=True)
+    comment = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.comment

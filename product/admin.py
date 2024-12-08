@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-from .models import Product, ProductDetail, ProductKeyword, ProductImage
+from .models import Product, ProductDetail, ProductKeyword, ProductImage, ProductComment
+
 
 # ProductKeyword Inline
 class ProductKeywordInline(admin.TabularInline):
@@ -32,6 +33,9 @@ class ProductImageInline(admin.TabularInline):
 class ProductDetailInline(admin.TabularInline):
     model = ProductDetail
 
+class ProductCommentInline(admin.TabularInline):
+    model = ProductComment
+    extra = 1
 
 # 自定义Product的Admin界面
 class ProductAdmin(admin.ModelAdmin):
@@ -39,7 +43,7 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ('name', 'description')
     list_filter = ('stock',)
 
-    inlines = [ProductImageInline, ProductKeywordInline, ProductDetailInline  ]  # 在Product界面中显示ProductDetail Inline
+    inlines = [ProductImageInline, ProductKeywordInline, ProductDetailInline, ProductCommentInline ]  # 在Product界面中显示ProductDetail Inline
 
 # 自定义ProductDetail的Admin界面
 class ProductDetailAdmin(admin.ModelAdmin):
