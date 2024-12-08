@@ -1,4 +1,6 @@
+from ckeditor.fields import RichTextField
 from django.db import models
+from ckeditor_uploader.fields import RichTextUploadingField
 
 # Create your models here.
 from django.db import models
@@ -14,7 +16,7 @@ class Product(models.Model):
 
 class ProductDetail(models.Model):
     product = models.OneToOneField(Product, related_name='detailDescription', on_delete=models.CASCADE)
-    detail_description = models.TextField(blank=True, null=True)
+    detail_description = RichTextUploadingField(blank=True, null=True)
 
     def __str__(self):
         return f"Detail for {self.product.name}"

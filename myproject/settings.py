@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'myapp',
     'product',
     'cart',
+    'ckeditor',
+    'ckeditor_uploader',
     'purchased',
     'rest_framework',
     'corsheaders'
@@ -57,6 +59,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'myproject.urls'
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",

@@ -33,6 +33,7 @@ urlpatterns = [
     path('cart/', include('cart.urls')),
     path('api/', include('myapp.urls')),
     path('purchase/', include('purchased.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
 # 添加媒体文件的URL配置
